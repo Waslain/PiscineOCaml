@@ -21,9 +21,3 @@ let ft_test_sign n =
 		print_endline ("Test with [" ^ itoa n ^ "]: positive")
 	else
 		print_endline ("Test with [" ^ itoa n ^ "]: negative")
-
-let () =
-	print_endline "Testing ft_test_sign with various inputs:";
-	ft_test_sign 42;
-	ft_test_sign 0;
-	ft_test_sign (-42);
