@@ -14,7 +14,7 @@ let leibniz_pi fl =
 				else loop (i + 1) new_acc
 			in
 			loop 0 0.0
-
+(* c'était trop dur ça m'a pris des heures à coup de réflexions et de recherches sur chacune de mes erreurs *)
 
 let () =
   print_int (leibniz_pi 0.0002429851)

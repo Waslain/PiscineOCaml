@@ -1,0 +1,1 @@
+ocamlopt *.ml && rm -f *.o *.cmx *.cmi && ./a.out
