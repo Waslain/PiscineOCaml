@@ -67,24 +67,20 @@ let get_rand_base () =
 	| 3 -> 'G'
 	| _ -> 'A'
 
-let generate_helix (n : int) : helix =
+let generate_helix (x : int) : helix =
+	let n = x / 2 in
 	if n <= 0 then []
 	else
 		let rec loop count acc =
-			if count <= 0 then
-				acc (* condition d'arret de la boucle *)
+			if count <= 0 then (* condition d'arret de la boucle *)
+				acc
 			else
-				let new_nuc = 
-					if count mod 2 = 0 then
-						generate_nucleotide (get_rand_base())(* génération du nucléotide aléatoire *)
-					else
-						match acc with
-						| [] -> generate_nucleotide (get_rand_base ())
-						| h :: _ -> complementary_nucleotide h
-					in
-					loop (count - 1) (new_nuc :: acc)
+				let new_nuc = generate_nucleotide (get_rand_base()) in (* génération du nucléotide aléatoire *)
+				let comp = complementary_nucleotide new_nuc in
+				loop (count - 1) (acc @ [new_nuc; comp])
 		in
 		loop n []
+		
 
 let () =
 	Random.self_init ();
