@@ -68,16 +68,25 @@ let get_rand_base () =
 	| _ -> 'A'
 
 let generate_helix (x : int) : helix =
-	let n = x / 2 in
+	if x = 1 then [generate_nucleotide (get_rand_base())]
+	else let n = x / 2 in
 	if n <= 0 then []
 	else
 		let rec loop count acc =
 			if count <= 0 then (* condition d'arret de la boucle *)
-				acc
+				let rec merge l1 l2 =
+					match l1, l2 with
+					| [], _ -> l2
+					| _, [] -> l1
+					| h1::t1, h2::t2 -> h1 :: h2 :: merge t1 t2
+				in
+				if x mod 2 = 0 then
+					merge acc (complementary_helix acc)
+				else
+					(merge acc (complementary_helix acc)) @ [generate_nucleotide (get_rand_base())]
 			else
 				let new_nuc = generate_nucleotide (get_rand_base()) in (* génération du nucléotide aléatoire *)
-				let comp = complementary_nucleotide new_nuc in
-				loop (count - 1) (acc @ [new_nuc; comp])
+				loop (count - 1) (acc @ [new_nuc])
 		in
 		loop n []
 		
@@ -85,4 +94,9 @@ let generate_helix (x : int) : helix =
 let () =
 	Random.self_init ();
 	Printf.printf "Generated Helix ⬇️\n";
+	print_endline (helix_to_string (generate_helix (-10)));
+	print_endline (helix_to_string (generate_helix 0));
+	print_endline (helix_to_string (generate_helix 1));
+	print_endline (helix_to_string (generate_helix 3));
+	print_endline (helix_to_string (generate_helix 6));
 	print_endline (helix_to_string (generate_helix 10))
