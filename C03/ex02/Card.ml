@@ -17,7 +17,7 @@ function.
 more cards are equal in value, return the first one. True coders use List.fold_left
 to do this function.*)
 
-Module Color =
+module Color =
 struct
 	type t = Spade | Heart | Diamond | Club
 	let all = [Spade; Heart; Diamond; Club]
@@ -75,3 +75,47 @@ struct
 			| As -> King
 end
 
+type t = Value.t * Color.t
+
+let newCard value color = (value, color)
+
+let allSpades = List.map (fun v -> v, Color.Spade) Value.all
+let allHearts = List.map (fun v -> v, Color.Heart) Value.all
+let allDiamonds = List.map (fun v -> v, Color.Diamond) Value.all
+let allClubs = List.map (fun v -> v, Color.Club) Value.all
+let all = List.concat [allSpades; allHearts; allDiamonds; allClubs]
+
+let getValue (value, _) = value
+let getColor (_, color) = color
+
+let toString t = Printf.sprintf "%s%s" (Value.toString (getValue t)) (Color.toString (getColor t))
+let toStringVerbose t = Printf.sprintf "Card (%s, %s)" (Value.toStringVerbose (getValue t)) (Color.toStringVerbose (getColor t))
+
+let compare a b =
+	let va = Value.toInt (getValue a) in
+	let vb = Value.toInt (getValue b) in
+	if va = vb then 0
+	else if va < vb then -1
+	else 1
+
+let max a b = 
+	let va = Value.toInt (getValue a) in
+	let vb = Value.toInt (getValue b) in
+	if va = vb then a
+	else if va < vb then b
+	else a
+let min a b = 
+	let va = Value.toInt (getValue a) in
+	let vb = Value.toInt (getValue b) in
+	if va = vb then a
+	else if va < vb then a
+	else b
+let best (lst : t list) = 
+	if lst = [] then invalid_arg "best: empty list"
+	else List.fold_left (fun acc x -> if compare acc x >= 0 then acc else x) (List.hd lst) (List.tl lst)
+
+let isOf t color = getColor t = color 
+let isSpade t = t = Color.Spade 
+let isHeart t = Color.Heart
+let isDiamonds t = Color.Diamond
+let isClubs t = Color.Club
