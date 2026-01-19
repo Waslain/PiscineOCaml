@@ -24,7 +24,7 @@ struct
 
 	let toString = function
 		| Spade -> "S" | Heart -> "H" | Diamond -> "D" | Club -> "C"
-		
+
 	let toStringVerbose = function
 		| Spade -> "Spade" | Heart -> "Heart" | Diamond -> "Diamond" | Club -> "Club"
 end
@@ -98,24 +98,24 @@ let compare a b =
 	else if va < vb then -1
 	else 1
 
-let max a b = 
+let max a b =
 	let va = Value.toInt (getValue a) in
 	let vb = Value.toInt (getValue b) in
 	if va = vb then a
 	else if va < vb then b
 	else a
-let min a b = 
+let min a b =
 	let va = Value.toInt (getValue a) in
 	let vb = Value.toInt (getValue b) in
 	if va = vb then a
 	else if va < vb then a
 	else b
-let best (lst : t list) = 
+let best (lst : t list) =
 	if lst = [] then invalid_arg "best: empty list"
 	else List.fold_left (fun acc x -> if compare acc x >= 0 then acc else x) (List.hd lst) (List.tl lst)
 
-let isOf t color = getColor t = color 
-let isSpade t = t = Color.Spade 
-let isHeart t = Color.Heart
-let isDiamonds t = Color.Diamond
-let isClubs t = Color.Club
+let isOf t color = getColor t = color
+let isSpade t = getColor t = Color.Spade
+let isHeart t = getColor t = Color.Heart
+let isDiamond t = getColor t = Color.Diamond
+let isClub t = getColor t = Color.Club
