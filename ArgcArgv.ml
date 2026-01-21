@@ -6,5 +6,5 @@ let main ac av =
 		print_list av
 
 let () =
-	let av = Array.to_list Sys.av in
+	let av = Array.to_list Sys.argv in
 	main (List.length av)	av
