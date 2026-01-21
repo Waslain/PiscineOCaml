@@ -2,4 +2,5 @@ a.out
 */*/*.cmi
 */*/*.cmx
 */*/*.o
+*/*/.depend
 Script
